@@ -18,15 +18,15 @@
 
     - There will be a information-type message box prompting you the selected files
 
-      <img src="image/image-20200422231542641.png" alt="image-20200422231542641" style="width:40%;height:200px" />
+      ![](image/image-20200422231542641.png)
 
     - There will be a information-type message box prompting you that no file is selected
 
-      <img src="image/image-20200422231638127.png" style="width:40%;" />
+      ![](image/image-20200422231638127.png)
 
     - There will be a warning-type message box showing the redundant dates
 
-      <img src="image/image-20200422231949932.png" alt="image-20200422231949932" style="width:40%;" />
+      ![](image/image-20200422231949932.png)
 
   - Click the button “Plot_Yield” to learning more about yield curves    ==Optional==
 
@@ -45,7 +45,9 @@
 
 #### Example Result
 
-<img src="image/image-20200422224722039.png" alt="image-20200422224722039" style="width: 50%;" /><img src="image/image-20200422224838868.png" alt="image-20200422224722039" style="width: 50%;" />
+![](image/image-20200422224722039.png)
+
+![](image/image-20200422224838868.png)
 
 #### Appendix(Code)
 
