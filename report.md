@@ -1,3 +1,5 @@
+
+
 # <center>Bond Project</center>
 
 <div align=center> 
@@ -43,7 +45,7 @@
 
 #### Example Result
 
-<img src="image/image-20200422224722039.png" alt="image-20200422224722039" style="width: 50%; zoom: 50%;" /><img src="image/image-20200422224838868.png" alt="image-20200422225310247" style="width:50%;" />
+<img src="image/image-20200422224722039.png" alt="image-20200422224722039" style="width: 50%;" /><img src="image/image-20200422224838868.png" alt="image-20200422224722039" style="width: 50%;" />
 
 #### Appendix(Code)
 
@@ -57,13 +59,13 @@ Function isIn(item As Variant, container As Range) As Boolean
 End Function
 '@Brief: load one csv file from the filefolder and write data to out sheet
 '@Return: the redundant date
-Function loadFile(path As String, outSheet As Worksheet) As String
+Function loadFile(path As String, outSheet As Worksheet, name As String) As String
     Dim inWb As Workbook
     Set inWb = GetObject(path)
     Dim items As Variant, row As Integer, col As Integer, start As Integer
     start = outSheet.UsedRange.Rows.Count
     For row = 1 To inWb.Sheets(1).UsedRange.Rows.Count
-        items = Split(inWb.Sheets(1).Cells(row, 1).Value, "|")
+        items = Split(inWb.Sheets(1).Cells(row, 1).value, "|")
         If isIn(items(0), outSheet.Range("a1:a" & start)) Then
             loadFile = items(0)
             Exit Function
@@ -73,8 +75,21 @@ Function loadFile(path As String, outSheet As Worksheet) As String
                 If InStr(items(col), "-") > 0 Then
                     items(col) = Mid(items(col), 1, InStrRev(items(col), "-")) & "20" & Mid(items(col), InStrRev(items(col), "-") + 1)
                 End If
-                outSheet.Cells(row + start, col + 1).Value = items(col)
+                outSheet.Cells(row + start, col + 1).value = items(col)
             Next
+            If StrComp(name, "Load Position", 1) = 0 Then
+                Dim value As String, value1 As String, value2 As String
+                value1 = inWb.Sheets(1).Cells(row, 2).value
+                value2 = inWb.Sheets(1).Cells(row, 3).value
+                If Len(value1) = 1 Then
+                    value1 = value1 & "00"
+                End If
+                If Len(value2) = 1 Then
+                    value2 = value2 & "00"
+                End If
+                value = items(UBound(items)) & value1 & value2
+                outSheet.Cells(row + start, UBound(items) + 1).value = value
+            End If
         End If
     Next
     loadFile = ""
@@ -90,7 +105,7 @@ Sub loadFiles(sheet As Worksheet, name As String)
         
         For index = 1 To .SelectedItems.Count
             files = files & Chr(10) & index & ":: " & .SelectedItems(index)
-            existed = existed & Chr(10) & loadFile(.SelectedItems(index), sheet)
+            existed = existed & Chr(10) & loadFile(.SelectedItems(index), sheet, name)
         Next
         'Some prompts
         If .SelectedItems.Count > 0 Then
